@@ -1,6 +1,6 @@
-import authReducer, {setAuthenticatedUserData} from "../../src/redux/auth-reducer";
+import authReducer, {setAuthenticatedUserData} from "./auth-reducer";
 
-const initialState = {
+const state = {
     authenticatedUserData: {
         id: null,
         email: null,
@@ -11,7 +11,7 @@ const initialState = {
 describe('auth reducer: set authenticated user data', () => {
 
     let action = setAuthenticatedUserData(1234, "mail@mail.ru", "user", true);
-    let newState = authReducer(initialState, action);
+    let newState = authReducer(state, action);
 
     it('set authenticated user id', () => {
         expect(newState.authenticatedUserData.id).toBe(1234);
