@@ -25,7 +25,7 @@ const Sidebar = (props) => {
     };
 
     return <Sider className="site-layout-background" breakpoint={"sm"}>
-        <Menu onClick={handleClick} selectedKeys={[selected]} >
+        <Menu onClick={handleClick} selectedKeys={[selected]}>
             {menuItems}
         </Menu>
     </Sider>
