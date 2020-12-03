@@ -1,4 +1,4 @@
-const SET_AUTHENTICATED_USER_DATA = "SET_AUTHENTICATED_USER_DATA";
+const SET_AUTHENTICATED_USER_DATA = "auth/SET_AUTHENTICATED_USER_DATA";
 
 const initialState = {
     authenticatedUserData: {
