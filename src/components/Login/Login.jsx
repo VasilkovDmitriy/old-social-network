@@ -12,6 +12,10 @@ const Login = ({onFinish, errorMessage, captchaUrl}) => {
             <Form.Item name="email"
                        rules={[
                            {required: true, message: 'Please input your email!',},
+                           {
+                               pattern: '^([A-Za-z0-9_\\-\\.])+\\@([A-Za-z0-9_\\-\\.])+\\.([A-Za-z]{2,})$',
+                               message: "Please input a valid email"
+                           }
                        ]}>
                 <Input prefix={<MailOutlined className="site-form-item-icon"/>}
                        placeholder="Email"/>

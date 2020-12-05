@@ -2,12 +2,15 @@ import React, {useState} from 'react';
 import {Layout} from 'antd';
 import {Menu} from "antd";
 import {SolutionOutlined, TeamOutlined} from "@ant-design/icons";
-import {Link} from "react-router-dom";
+import {Link, withRouter} from "react-router-dom";
 
 const {Sider} = Layout;
 
 const Sidebar = (props) => {
-    const [selected, setSelected] = useState("profile");
+
+    const currentItems = props.location.pathname.split("/")[1];
+
+    const [selected, setSelected] = useState(currentItems);
 
     const menuItemsData = [
         {key: "profile", link: "profile", title: "Profile", icon: <SolutionOutlined/>},
@@ -31,4 +34,4 @@ const Sidebar = (props) => {
     </Sider>
 }
 
-export default Sidebar;
+export default withRouter(Sidebar);

@@ -4,7 +4,7 @@ import 'antd/dist/antd.css';
 import {Layout} from 'antd';
 import {Switch, Route, Redirect, BrowserRouter} from "react-router-dom";
 import Sidebar from "./components/Sidebar/Sidebar";
-import Header from "./components/Header/Header";
+import AppHeaderContainer from "./components/Header/AppHeaderContainer";
 import ProfileContainer from "./components/Profile/ProfileContainer";
 import UsersContainer from "./components/Users/UsersContainer";
 import {connect, Provider} from "react-redux";
@@ -13,6 +13,7 @@ import {appInitialization} from "./redux/app-reducer";
 import {getIsInitialized} from "./redux/app-selectors";
 import LoginContainer from "./components/Login/LoginContainer";
 import store from "./redux/store";
+
 
 
 const {Content} = Layout;
@@ -26,7 +27,7 @@ const App = ({appInitialization, isInitialized}) => {
     }
 
     return <Layout>
-        <Header/>
+        <AppHeaderContainer/>
         <Layout>
             <Sidebar/>
             <Content>

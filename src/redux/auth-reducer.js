@@ -73,4 +73,15 @@ export const userAuthentication = (email, password, rememberMe, captcha) => asyn
     }
 }
 
+export const userLogout = () => async (dispatch) => {
+    try {
+        const response = await authAPI.logout();
+        if(response.resultCode === 0) {
+            dispatch(setAuthenticatedUserData(null, null, null, false));
+        }
+    } catch(response) {
+
+    }
+}
+
 export default authReducer;
