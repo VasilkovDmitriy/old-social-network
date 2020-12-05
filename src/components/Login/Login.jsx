@@ -2,20 +2,9 @@ import React from 'react';
 import {Form, Input, Button, Checkbox} from 'antd';
 import {MailOutlined, LockOutlined, SafetyOutlined} from '@ant-design/icons';
 import style from './Login.module.css';
-import {connect} from "react-redux";
-import {userAuthentication} from "../../redux/auth-reducer";
-import {getAuthErrorMessage, getCaptchaUrl, getIsAuth} from "../../redux/auth-selectors";
-import {Redirect} from "react-router-dom";
 
-const Login = ({userAuthentication, errorMessage, captchaUrl, isAuth}) => {
-    if(isAuth) {
-        return <Redirect to='/profile'/>
-    }
 
-    const onFinish = (values) => {
-        const {email, password, remember, captcha} = values;
-        userAuthentication(email, password, remember, captcha);
-    };
+const Login = ({onFinish, errorMessage, captchaUrl}) => {
 
     return <Form name="login" initialValues={{remember: true,}} onFinish={onFinish}>
 
@@ -39,22 +28,19 @@ const Login = ({userAuthentication, errorMessage, captchaUrl, isAuth}) => {
             <Form.Item name="remember" valuePropName="checked">
                 <Checkbox>Remember me</Checkbox>
             </Form.Item>
-
             {
                 captchaUrl &&
                 <div>
-                    <img src={captchaUrl}/>
+                    <img src={captchaUrl} alt="captcha"/>
                     <Form.Item name="captcha"
                                rules={[
                                    {required: true, message: 'Please input captcha symbols!',},
                                ]}>
-                        <Input prefix={<SafetyOutlined  className="site-form-item-icon"/>}
+                        <Input prefix={<SafetyOutlined className="site-form-item-icon"/>}
                                placeholder="Captcha symbols"/>
                     </Form.Item>
                 </div>
-
             }
-
             <Form.Item>
                 <Button className="login-form-button" type="primary" htmlType="submit">
                     Submit
@@ -67,16 +53,7 @@ const Login = ({userAuthentication, errorMessage, captchaUrl, isAuth}) => {
                 {errorMessage}
             </div>
         }
-
-
     </Form>
 }
 
-const mapStateToProps = (state) => ({
-    errorMessage: getAuthErrorMessage(state),
-    captchaUrl: getCaptchaUrl(state),
-    isAuth: getIsAuth(state)
-})
-
-
-export default connect(mapStateToProps, {userAuthentication})(Login);
+export default Login;

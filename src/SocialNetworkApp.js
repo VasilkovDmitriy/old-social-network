@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import './App.css';
+import './SocialNetworkApp.css';
 import 'antd/dist/antd.css';
 import {Layout} from 'antd';
 import {Switch, Route, Redirect, BrowserRouter} from "react-router-dom";
@@ -11,8 +11,9 @@ import {connect, Provider} from "react-redux";
 import Preloader from "./components/common/Preloader/Preloader";
 import {appInitialization} from "./redux/app-reducer";
 import {getIsInitialized} from "./redux/app-selectors";
-import Login from "./components/Login/Login";
+import LoginContainer from "./components/Login/LoginContainer";
 import store from "./redux/store";
+
 
 const {Content} = Layout;
 
@@ -33,7 +34,7 @@ const App = ({appInitialization, isInitialized}) => {
                     <Redirect exact from="/" to="/profile"/>
                     <Route path="/profile" render={() => <ProfileContainer/>}/>
                     <Route path="/users" render={() => <UsersContainer/>}/>
-                    <Route path="/login" render={() => <Login/>}/>
+                    <Route path="/login" render={() => <LoginContainer/>}/>
                     <Route path="*" render={() => <div>Not found 404</div>}/>
                 </Switch>
             </Content>
