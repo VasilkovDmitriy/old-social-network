@@ -1,5 +1,5 @@
 import {authAPI} from "../api/api";
-import {setAuthenticatedUserData} from "./auth-reducer";
+import {getAuthUserData, setAuthenticatedUserData} from "./auth-reducer";
 
 const SET_IS_INITIALIZED = 'app/SET_IS_INITIALIZED';
 
@@ -20,11 +20,7 @@ export const setIsInitialized = (isInitialized) => ({type: SET_IS_INITIALIZED, i
 
 export const appInitialization = () => async (dispatch) => {
     try {
-        const response = await authAPI.me();
-        if(response.resultCode === 0) {
-            const {id, email, login} = response.data;
-            dispatch(setAuthenticatedUserData(id, email, login, true));
-        }
+        await dispatch(getAuthUserData());
         dispatch(setIsInitialized(true));
     } catch (response) {
         console.log(response);
