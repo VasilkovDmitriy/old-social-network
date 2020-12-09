@@ -1,7 +1,7 @@
 import React from 'react';
 import AppHeader from "./AppHeader";
 import {connect} from "react-redux";
-import {getIsAuth} from "../../redux/auth-selectors";
+import {getAuthenticatedUserData, getIsAuth} from "../../redux/auth-selectors";
 import {userLogout} from "../../redux/auth-reducer";
 
 
@@ -10,7 +10,8 @@ const AppHeaderContainer = (props) => {
 }
 
 const mapStateToProps = (state) => ({
-    isAuth: getIsAuth(state)
+    isAuth: getIsAuth(state),
+    authenticatedUserData: getAuthenticatedUserData(state)
 })
 
 

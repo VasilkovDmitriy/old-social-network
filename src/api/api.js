@@ -28,3 +28,31 @@ export const securityAPI = {
         return instance.get('security/get-captcha-url').then(response => response.data);
     }
 }
+
+export const profileAPI = {
+    getUserProfile(userId) {
+        return instance.get(`profile/${userId}`).then(response => response.data);
+    },
+
+    saveProfile(profileData) {
+        return instance.put('profile', profileData).then(response => response.data);
+    },
+
+    savePhoto(photo) {
+        let formData = new FormData();
+        formData.append('image', photo)
+        return instance.put('profile/photo', formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        }).then(response => response.data);
+    },
+
+    getUserStatus(userId) {
+        return instance.get(`profile/status/${userId}`).then(response => response.data);
+    },
+
+    saveUserStatus(status) {
+        return instance.put('profile/status', {status}).then(response => response.data);
+    }
+}

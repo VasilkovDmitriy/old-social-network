@@ -1,0 +1,12 @@
+.fullName {
+    font-weight: bold;
+    font-size: 2em;
+}
+
+.userPhoto {
+    width: 300px;
+}
+
+.contactsWrapper {
+    padding-left: 15px;
+}

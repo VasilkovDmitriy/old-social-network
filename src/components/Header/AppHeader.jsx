@@ -1,25 +1,38 @@
 import React from 'react';
-import { Layout, Button } from 'antd';
-import { LogoutOutlined,  LoginOutlined} from '@ant-design/icons';
+import {Layout, Button, Row, Col, Avatar} from 'antd';
+import {LogoutOutlined, LoginOutlined} from '@ant-design/icons';
 import {Link} from "react-router-dom";
+import style from "./AppHeader.module.css";
 
 const {Header} = Layout;
 
-const AppHeader = ({isAuth, userLogout}) => {
+const AppHeader = ({isAuth, authenticatedUserData, userLogout}) => {
 
     const onLogoutButtonClick = () => {
         userLogout();
     }
 
-
     return <Header className="header">
-        <div>
-            {
-                isAuth
-                    ? <Button type="primary" onClick={onLogoutButtonClick} icon={<LogoutOutlined />}>Logout</Button>
-                    : <Link to="login"><Button type="primary" icon={<LoginOutlined />}>Login</Button></Link>
-            }
-        </div>
+        <Row className={style.headerContentWrapper}>
+            <Col>
+                {
+                    isAuth
+                        ? <Button type="primary" onClick={onLogoutButtonClick}
+                                  icon={<LogoutOutlined/>}>Logout</Button>
+                        : <Link to="login"><Button type="primary" icon={<LoginOutlined/>}>Login</Button></Link>
+                }
+            </Col>
+            <Col>
+                {
+                    isAuth &&
+                    <span className={style.login}>{authenticatedUserData.login}</span>
+
+                }
+                <Avatar style={{backgroundColor: '#87d068'}}>
+                    {authenticatedUserData.login[0].toUpperCase()}
+                </Avatar>
+            </Col>
+        </Row>
     </Header>
 }
 

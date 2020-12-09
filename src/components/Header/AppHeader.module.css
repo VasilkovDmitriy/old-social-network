@@ -1,0 +1,9 @@
+.login {
+    color: white;
+    margin-right: 15px;
+}
+
+.headerContentWrapper {
+    display: flex;
+    justify-content: space-between;
+}
