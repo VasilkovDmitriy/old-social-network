@@ -56,3 +56,9 @@ export const profileAPI = {
         return instance.put('profile/status', {status}).then(response => response.data);
     }
 }
+
+export const usersAPI = {
+    getUsers(pageSize, portionNumber) {
+        return instance.get(`users?count=${pageSize}&page=${portionNumber}`).then(response => response.data);
+    }
+}

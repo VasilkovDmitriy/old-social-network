@@ -19,15 +19,22 @@ const ProfileStatus = ({userStatus, updateUserStatus}) => {
     }
 
     const onStatusChange = (event) => {
-        //debugger;
-        console.log(event.target.value);
         setStatus(event.target.value);
+    }
+
+    const handleKeyPress = (e) => {
+        if (e.key === 'Enter') {
+            deactivateEditMode();
+        }
     }
 
     return <div>
         {
             editMode
-                ? <Input onBlur={deactivateEditMode} onChange={onStatusChange} value={status}
+                ? <Input onBlur={deactivateEditMode}
+                         onChange={onStatusChange}
+                         onKeyPress={handleKeyPress}
+                         value={status}
                          placeholder="Your status"/>
                 : <span onClick={activateEditMode}>{status || "------"}</span>
         }
