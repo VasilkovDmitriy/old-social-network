@@ -4,14 +4,15 @@ const SET_USERS_ITEMS = 'users/SET_USERS_ITEMS';
 const SET_TOTAL_USERS_COUNT = 'users/SET_TOTAL_USERS_COUNT';
 const SET_PORTION_NUMBER = 'users/SET_PORTION_NUMBER';
 const SET_PAGE_SIZE = 'users/SET_PAGE_SIZE';
-const SET_IS_USERS_FETCHING = 'users/SET_IS_USERS_FETCHING';
+const SET_IS_USER_FOLLOWED = 'users/SET_IS_USER_FOLLOWED';
+const SET_IS_FOLLOW_FETCHING = 'users/SET_IS_FOLLOW_FETCHING';
 
 const initialState = {
     usersItems: [],
     totalUsersCount: null,
     portionNumber: 1,
     pageSize: 20,
-    isUsersFetching: false
+    isFollowFetching: []
 }
 
 const usersReducer = (state = initialState, action) => {
@@ -32,14 +33,23 @@ const usersReducer = (state = initialState, action) => {
             return {
                 ...state, pageSize: action.pageSize
             }
-        case SET_IS_USERS_FETCHING:
+        case SET_IS_USER_FOLLOWED:
             return {
-                ...state, isUsersFetching: action.isFetching
+                ...state, usersItems: [...state.usersItems.map(user => {
+                    return user.id === action.userId ? {...user, followed: action.followed} : user
+                })]
+            }
+        case SET_IS_FOLLOW_FETCHING:
+            return {
+                ...state, isFollowFetching: action.isFetching
+                    ? [...state.isFollowFetching, action.userId]
+                    : state.isFollowFetching.filter(userId => userId !== action.userId)
             }
         default:
             return state;
     }
 }
+
 
 const setUsersItems = (usersItems) => ({type: SET_USERS_ITEMS, usersItems});
 
@@ -49,21 +59,49 @@ export const setPortionNumber = (portionNumber) => ({type: SET_PORTION_NUMBER, p
 
 export const setPageSize = (pageSize) => ({type: SET_PAGE_SIZE, pageSize});
 
-const setIsUsersFetching = (isFetching) => ({type: SET_IS_USERS_FETCHING, isFetching})
+export const setIsUserFollowed = (userId, followed) => ({type: SET_IS_USER_FOLLOWED, userId, followed});
+
+const setIsFollowFetching = (userId, isFetching) => ({type: SET_IS_FOLLOW_FETCHING, userId, isFetching});
+
 
 export const requestUsersItems = (pageSize, portionNumber) => async (dispatch) => {
     try {
-        dispatch(setIsUsersFetching(true));
+        dispatch(setUsersItems(null));
         const response = await usersAPI.getUsers(pageSize, portionNumber);
 
         if (!response.error) {
             dispatch(setTotalUsersCount(response.totalCount));
             dispatch(setUsersItems(response.items));
-            dispatch(setIsUsersFetching(false));
         }
     } catch (response) {
         console.log(response);
     }
+}
+
+export const follow = (userId) => async (dispatch) => {
+    try {
+        dispatch(followUnfollowFlow(userId, usersAPI.follow, true));
+    } catch (response) {
+        console.log(response);
+    }
+}
+
+export const unfollow = (userId) => async (dispatch) => {
+    try {
+        dispatch(followUnfollowFlow(userId, usersAPI.unfollow, false));
+    } catch (response) {
+        console.log(response);
+    }
+}
+
+const followUnfollowFlow = (userId, API, followed) => async (dispatch) => {
+    dispatch(setIsFollowFetching(userId, true));
+    const response = await API(userId);
+
+    if (response.resultCode === 0) {
+        dispatch(setIsUserFollowed(userId, followed));
+    }
+    dispatch(setIsFollowFetching(userId, false));
 }
 
 export default usersReducer;

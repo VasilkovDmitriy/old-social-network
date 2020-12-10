@@ -60,5 +60,13 @@ export const profileAPI = {
 export const usersAPI = {
     getUsers(pageSize, portionNumber) {
         return instance.get(`users?count=${pageSize}&page=${portionNumber}`).then(response => response.data);
+    },
+
+    follow(userId) {
+        return instance.post(`follow/${userId}`).then(response => response.data);
+    },
+
+    unfollow(userId) {
+        return instance.delete(`follow/${userId}`).then(response => response.data);
     }
 }

@@ -2,13 +2,13 @@ import React, {useEffect} from 'react';
 import Users from "./Users";
 import {connect} from "react-redux";
 import {
-    getIsUsersFetching,
+    getIsFollowFetching,
     getPageSize,
     getPortionNumber,
     getTotalUsersCount,
     getUsersItems
 } from "../../redux/users-selectors";
-import {requestUsersItems, setPageSize, setPortionNumber} from "../../redux/users-reducer";
+import {follow, requestUsersItems, setPageSize, setPortionNumber, unfollow} from "../../redux/users-reducer";
 import {Pagination} from "antd";
 
 const UsersContainer = ({
@@ -19,11 +19,14 @@ const UsersContainer = ({
                             setPageSize,
                             setPortionNumber,
                             totalCount,
-                            isUsersFetching
+                            follow,
+                            unfollow,
+                            isFollowFetching
                         }) => {
+
     useEffect(() => {
         requestUsersItems(pageSize, portionNumber)
-    }, [pageSize, portionNumber, requestUsersItems])
+    }, [pageSize, portionNumber, requestUsersItems]);
 
     const onPaginatorChange = (newPortionNumber, newPageSize) => {
         if (newPortionNumber !== portionNumber) {
@@ -34,11 +37,14 @@ const UsersContainer = ({
         }
     }
 
+    const Paginator = totalCount ? <Pagination showQuickJumper
+                                               onChange={onPaginatorChange}
+                                               current={portionNumber}
+                                               pageSize={pageSize}
+                                               total={totalCount}/> : null;
     return <div>
-        <Pagination showQuickJumper onChange={onPaginatorChange} current={portionNumber}
-                    pageSize={pageSize}
-                    total={totalCount}/>
-        <Users usersItems={usersItems} isUsersFetching={isUsersFetching}/>
+        {Paginator}
+        <Users usersItems={usersItems} follow={follow} unfollow={unfollow} isFollowFetching={isFollowFetching}/>
     </div>
 
 }
@@ -48,9 +54,9 @@ const mapStateToProps = (state) => ({
     totalCount: getTotalUsersCount(state),
     portionNumber: getPortionNumber(state),
     pageSize: getPageSize(state),
-    isUsersFetching: getIsUsersFetching(state)
+    isFollowFetching: getIsFollowFetching(state)
 });
 
 
 export default connect(mapStateToProps,
-    {requestUsersItems, setPortionNumber, setPageSize})(UsersContainer);
+    {requestUsersItems, setPortionNumber, setPageSize, follow, unfollow})(UsersContainer);
