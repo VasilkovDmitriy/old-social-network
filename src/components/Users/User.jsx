@@ -2,6 +2,7 @@ import React from 'react';
 import {Avatar, Button} from "antd";
 import {UserOutlined} from "@ant-design/icons";
 import style from './User.module.css';
+import {Link} from "react-router-dom";
 
 const User = ({user, follow, unfollow, isFollowFetching}) => {
     const onFollow = (userId) => {
@@ -19,12 +20,14 @@ const User = ({user, follow, unfollow, isFollowFetching}) => {
     return <div className={style.usersItem}>
         <div className={style.userName}>{user.name}</div>
         <div>
-            {
-                user.photos.large
-                    ? <img src={user.photos.large} alt=""/>
-                    : <Avatar shape="square" size={200} icon={<UserOutlined/>}/>
+            <Link to={`/profile/${user.id}`}>
+                {
+                    user.photos.large
+                        ? <img src={user.photos.large} alt=""/>
+                        : <Avatar shape="square" size={200} icon={<UserOutlined/>}/>
 
-            }
+                }
+            </Link>
         </div>
         <div><b>Status: </b>{user.status}</div>
         {

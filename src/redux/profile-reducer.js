@@ -54,6 +54,7 @@ const setUserProfile = (status) => ({type: SET_USER_PROFILE, status});
 
 export const requestUserProfile = (userId) => async (dispatch) => {
     try {
+        dispatch(setProfileData(null));
         const response = await profileAPI.getUserProfile(userId);
         dispatch(setProfileData(response));
     } catch (response) {
