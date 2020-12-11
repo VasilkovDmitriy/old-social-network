@@ -1,10 +1,33 @@
+.profileWrapper {
+    display: flex;
+    justify-content: space-between;
+}
+
+.avatarAndButtonsWrapper {
+    max-width: 280px;
+}
+
+.userPhoto img {
+    width: 280px;
+}
+
+.profileButtons {
+    display: flex;
+    justify-content: space-between;
+    padding-top: 5px;
+}
+
+.profileInformationWrapper {
+    flex-grow: 1;
+    margin-left: 20px;
+    background-color: white;
+    padding: 10px;
+    padding-left: 20px;
+}
+
 .fullName {
     font-weight: bold;
     font-size: 2em;
-}
-
-.userPhoto {
-    width: 300px;
 }
 
 .contactsWrapper {

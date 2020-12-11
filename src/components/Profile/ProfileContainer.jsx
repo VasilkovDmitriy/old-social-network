@@ -21,6 +21,7 @@ import {
 
 const ProfileContainer = ({authenticatedUserId, requestUserProfile, requestUserStatus, ...props}) => {
     const userId = props.match.params.id || authenticatedUserId;
+    const isOwner = !props.match.params.id || props.match.params.id === authenticatedUserId;
 
     useEffect(() => {
         requestUserProfile(userId);
@@ -28,7 +29,7 @@ const ProfileContainer = ({authenticatedUserId, requestUserProfile, requestUserS
     }, [userId, requestUserProfile]);
 
 
-    return <Profile {...props}/>
+    return <Profile isOwner={isOwner} {...props}/>
 }
 
 const mapStateToProps = (state) => ({
@@ -36,7 +37,8 @@ const mapStateToProps = (state) => ({
     profileData: getProfileData(state),
     userStatus: getUserProfile(state),
     isProfileSavedSuccess: getIsProfileSavedSuccess(state),
-    profileSaveErrorMessage: getProfileSaveErrorMessage(state)
+    profileSaveErrorMessage: getProfileSaveErrorMessage(state),
+
 })
 
 export default compose(

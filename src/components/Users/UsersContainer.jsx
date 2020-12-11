@@ -1,4 +1,5 @@
 import React, {useEffect} from 'react';
+import style from './Users.module.css'
 import Users from "./Users";
 import {connect} from "react-redux";
 import {
@@ -38,15 +39,20 @@ const UsersContainer = ({
     }
 
     const Paginator = totalCount ? <Pagination showQuickJumper
+                                               className={style.paginator}
                                                onChange={onPaginatorChange}
                                                current={portionNumber}
                                                pageSize={pageSize}
-                                               total={totalCount}/> : null;
+                                               total={totalCount}/>
+        : null;
+
     return <div>
         {Paginator}
-        <Users usersItems={usersItems} follow={follow} unfollow={unfollow} isFollowFetching={isFollowFetching}/>
+        <Users usersItems={usersItems}
+               follow={follow}
+               unfollow={unfollow}
+               isFollowFetching={isFollowFetching}/>
     </div>
-
 }
 
 const mapStateToProps = (state) => ({
@@ -56,7 +62,6 @@ const mapStateToProps = (state) => ({
     pageSize: getPageSize(state),
     isFollowFetching: getIsFollowFetching(state)
 });
-
 
 export default connect(mapStateToProps,
     {requestUsersItems, setPortionNumber, setPageSize, follow, unfollow})(UsersContainer);

@@ -1,7 +1,8 @@
 import React from 'react';
-import {Form, Input, Button, Checkbox, Upload} from 'antd';
+import {Form, Input, Button, Checkbox} from 'antd';
 import TextArea from "antd/es/input/TextArea";
 import style from './ProfileEditForm.module.css';
+
 
 const layout = {
     labelCol: {span: 8},
@@ -11,7 +12,7 @@ const tailLayout = {
     wrapperCol: {offset: 8, span: 16},
 };
 
-const ProfileEditForm = ({profileData, deactivateEditMode, profileSaveErrorMessage}) => {
+const ProfileEditForm = ({profileData, deactivateEditMode, profileSaveErrorMessage, exitWithoutSaving}) => {
 
     const {contacts} = profileData;
 
@@ -66,9 +67,10 @@ const ProfileEditForm = ({profileData, deactivateEditMode, profileSaveErrorMessa
             <Form.Item {...tailLayout}>
                 <Button type="primary" htmlType="submit">Save</Button>
             </Form.Item>
+            <Button onClick={exitWithoutSaving}>Back</Button>
         </Form>
-    </div>
 
+    </div>
 }
 
 export default ProfileEditForm;

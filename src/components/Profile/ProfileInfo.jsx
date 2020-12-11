@@ -1,7 +1,7 @@
 import React from 'react';
 import style from "./Profile.module.css";
-import {Button, Upload} from "antd";
-import {UploadOutlined} from "@ant-design/icons";
+import {Avatar, Button, Upload, Divider} from "antd";
+import {UploadOutlined, UserOutlined} from "@ant-design/icons";
 import ProfileStatus from "./ProfileStatus";
 
 const ProfileInfo = ({
@@ -9,7 +9,8 @@ const ProfileInfo = ({
                          activateEditMode,
                          onUploadPhoto,
                          userStatus,
-                         updateUserStatus
+                         updateUserStatus,
+                         isOwner
                      }) => {
 
     const {fullName, photos, aboutMe, lookingForAJob, lookingForAJobDescription, contacts} = profileData;
@@ -20,39 +21,55 @@ const ProfileInfo = ({
         </div>
     })
 
-    return <div>
-        <div className={style.fullName}>
-            {fullName}
-        </div>
-        <ProfileStatus userStatus={userStatus} updateUserStatus={updateUserStatus}/>
-        <div className={style.userPhoto}>
-            <img src={photos.large} alt="user avatar"/>
-        </div>
-        <Upload beforeUpload={onUploadPhoto}>
-            <Button icon={<UploadOutlined/>}>Upload photo</Button>
-        </Upload>
-        <div>
-            <button onClick={activateEditMode}>Edit profile</button>
-        </div>
-        <div>
-            <b>About me: </b>{aboutMe}
-        </div>
-        <div>
-            <b>Looking for a job: </b>{lookingForAJob ? "yes" : "no"}
-        </div>
-        {
-            lookingForAJob &&
-            <div>
-                <b>Professional skills: </b>{lookingForAJobDescription}
+    return <div className={style.profileWrapper}>
+        <div className={style.avatarAndButtonsWrapper}>
+            <div className={style.userPhoto}>
+                {
+                    photos.large
+                        ? <img src={photos.large} alt="user avatar"/>
+                        : <Avatar shape="square" size={280} icon={<UserOutlined/>}/>
+                }
             </div>
-        }
-        <div>
-            <b>Contacts: </b>
-            <div className={style.contactsWrapper}>
-                {contactsItems}
-            </div>
+            {
+                isOwner && <div className={style.profileButtons}>
+                    <Upload beforeUpload={onUploadPhoto}>
+                        <Button icon={<UploadOutlined/>}>Upload photo</Button>
+                    </Upload>
+                    <div>
+                        <Button onClick={activateEditMode}>Edit profile</Button>
+                    </div>
+                </div>
+            }
         </div>
 
+        <div className={style.profileInformationWrapper}>
+            <div className={style.fullName}>
+                {fullName}
+            </div>
+
+            <ProfileStatus userStatus={userStatus} updateUserStatus={updateUserStatus} isOwner={isOwner}/>
+
+            <Divider />
+
+            <div>
+                <b>About me: </b>{aboutMe}
+            </div>
+            <div>
+                <b>Looking for a job: </b>{lookingForAJob ? "yes" : "no"}
+            </div>
+            {
+                lookingForAJob &&
+                <div>
+                    <b>Professional skills: </b>{lookingForAJobDescription}
+                </div>
+            }
+            <div>
+                <b>Contacts: </b>
+                <div className={style.contactsWrapper}>
+                    {contactsItems}
+                </div>
+            </div>
+        </div>
     </div>
 }
 

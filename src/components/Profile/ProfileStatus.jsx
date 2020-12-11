@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import {Input} from 'antd';
 
-const ProfileStatus = ({userStatus, updateUserStatus}) => {
+const ProfileStatus = ({userStatus, updateUserStatus, isOwner}) => {
     const [status, setStatus] = useState(userStatus);
     const [editMode, setEditMode] = useState(false);
 
@@ -10,7 +10,9 @@ const ProfileStatus = ({userStatus, updateUserStatus}) => {
     }, [userStatus])
 
     const activateEditMode = () => {
-        setEditMode(true);
+        if (isOwner) {
+            setEditMode(true);
+        }
     }
 
     const deactivateEditMode = () => {
@@ -36,7 +38,7 @@ const ProfileStatus = ({userStatus, updateUserStatus}) => {
                          onKeyPress={handleKeyPress}
                          value={status}
                          placeholder="Your status"/>
-                : <span onClick={activateEditMode}>{status || "------"}</span>
+                : <span onClick={activateEditMode}><b>Status: </b>{status || "------"}</span>
         }
     </div>
 }

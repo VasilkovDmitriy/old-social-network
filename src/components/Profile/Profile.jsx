@@ -10,7 +10,8 @@ const Profile = ({
                      profileSaveErrorMessage,
                      savePhoto,
                      userStatus,
-                     updateUserStatus
+                     updateUserStatus,
+                     isOwner
                  }) => {
     const [editMode, setEditMode] = useState(false);
 
@@ -28,6 +29,10 @@ const Profile = ({
         saveProfile(profileFormData);
     }
 
+    const exitWithoutSaving = () => {
+        setEditMode(false);
+    }
+
     const onUploadPhoto = (photo) => {
         savePhoto(photo);
         return Promise.reject();
@@ -40,13 +45,15 @@ const Profile = ({
     return editMode
         ? <ProfileEditForm profileData={profileData}
                            deactivateEditMode={deactivateEditMode}
-                           profileSaveErrorMessage={profileSaveErrorMessage}/>
+                           profileSaveErrorMessage={profileSaveErrorMessage}
+                           exitWithoutSaving={exitWithoutSaving}/>
 
         : <ProfileInfo profileData={profileData}
                        activateEditMode={activateEditMode}
                        onUploadPhoto={onUploadPhoto}
                        userStatus={userStatus}
-                       updateUserStatus={updateUserStatus}/>
+                       updateUserStatus={updateUserStatus}
+                       isOwner={isOwner}/>
 }
 
 export default Profile;
