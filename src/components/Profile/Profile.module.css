@@ -33,3 +33,7 @@
 .contactsWrapper {
     padding-left: 15px;
 }
+
+.contactsWrapper a {
+    color: black;
+}

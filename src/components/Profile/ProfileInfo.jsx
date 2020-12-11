@@ -16,8 +16,15 @@ const ProfileInfo = ({
     const {fullName, photos, aboutMe, lookingForAJob, lookingForAJobDescription, contacts} = profileData;
 
     const contactsItems = Object.keys(contacts).map(key => {
+        const contact = contacts[key];
+        let contactHref = "#";
+
+        if (contact) {
+            contactHref = contact.substr(0, 4) === 'http' ? contact : `https://${contact}`;
+        }
+
         return <div key={key}>
-            <b>{key}: </b>{contacts[key]}
+            <b>{key}: </b><a href={contactHref}>{contact}</a>
         </div>
     })
 
