@@ -11,6 +11,7 @@ import {
 } from "../../redux/users-selectors";
 import {follow, requestUsersItems, setPageSize, setPortionNumber, unfollow} from "../../redux/users-reducer";
 import {Pagination} from "antd";
+import {getIsAuth} from "../../redux/authentication-selectors";
 
 const UsersContainer = ({
                             requestUsersItems,
@@ -22,7 +23,8 @@ const UsersContainer = ({
                             totalCount,
                             follow,
                             unfollow,
-                            isFollowFetching
+                            isFollowFetching,
+                            isAuth
                         }) => {
 
     useEffect(() => {
@@ -51,7 +53,8 @@ const UsersContainer = ({
         <Users usersItems={usersItems}
                follow={follow}
                unfollow={unfollow}
-               isFollowFetching={isFollowFetching}/>
+               isFollowFetching={isFollowFetching}
+               isAuth={isAuth}/>
     </div>
 }
 
@@ -60,7 +63,8 @@ const mapStateToProps = (state) => ({
     totalCount: getTotalUsersCount(state),
     portionNumber: getPortionNumber(state),
     pageSize: getPageSize(state),
-    isFollowFetching: getIsFollowFetching(state)
+    isFollowFetching: getIsFollowFetching(state),
+    isAuth: getIsAuth(state)
 });
 
 export default connect(mapStateToProps,

@@ -4,7 +4,7 @@ import {UserOutlined} from "@ant-design/icons";
 import style from './User.module.css';
 import {Link} from "react-router-dom";
 
-const User = ({user, follow, unfollow, isFollowFetching}) => {
+const User = ({user, follow, unfollow, isFollowFetching, isAuth}) => {
     const onFollow = (userId) => {
         follow(userId);
     }
@@ -41,18 +41,30 @@ const User = ({user, follow, unfollow, isFollowFetching}) => {
 
         <div className={style.followedButton}>
             {
-                user.followed
-                    ? <Button onClick={(e) => onUnfollow(user.id)}
-                              disabled={isDisableButton(isFollowFetching, user.id)}>
-                        Unfollow
-                    </Button>
-                    : <Button onClick={(e) => onFollow(user.id)}
-                              disabled={isDisableButton(isFollowFetching, user.id)}>
-                        Follow
-                    </Button>
+                isAuth && <FollowedButtons user={user}
+                                           onFollow={onFollow}
+                                           onUnfollow={onUnfollow}
+                                           isDisableButton={isDisableButton}
+                                           isFollowFetching={isFollowFetching}/>
             }
 
         </div>
+    </div>
+}
+
+const FollowedButtons = ({user, onFollow, onUnfollow, isDisableButton, isFollowFetching}) => {
+    return <div>
+        {
+            user.followed
+                ? <Button onClick={(e) => onUnfollow(user.id)}
+                          disabled={isDisableButton(isFollowFetching, user.id)}>
+                    Unfollow
+                </Button>
+                : <Button onClick={(e) => onFollow(user.id)}
+                          disabled={isDisableButton(isFollowFetching, user.id)}>
+                    Follow
+                </Button>
+        }
     </div>
 }
 

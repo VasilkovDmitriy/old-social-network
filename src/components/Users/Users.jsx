@@ -2,7 +2,7 @@ import React from 'react';
 import User from "./User";
 import SmallPreloader from "../common/Preloader/SmallPreloader";
 
-const Users = ({usersItems, follow, unfollow, isFollowFetching}) => {
+const Users = ({usersItems, follow, unfollow, isFollowFetching, isAuth}) => {
     if (!usersItems) {
         return <SmallPreloader/>
     }
@@ -12,7 +12,8 @@ const Users = ({usersItems, follow, unfollow, isFollowFetching}) => {
                      user={user}
                      follow={follow}
                      unfollow={unfollow}
-                     isFollowFetching={isFollowFetching}/>
+                     isFollowFetching={isFollowFetching}
+                     isAuth={isAuth}/>
     })
 
     return <div>
