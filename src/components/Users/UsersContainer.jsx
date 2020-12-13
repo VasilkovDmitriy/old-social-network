@@ -3,6 +3,8 @@ import style from './Users.module.css'
 import Users from "./Users";
 import {connect} from "react-redux";
 import {
+    getFollowingError,
+    getGlobalError,
     getIsFollowFetching,
     getPageSize,
     getPortionNumber,
@@ -10,7 +12,7 @@ import {
     getUsersItems
 } from "../../redux/users-selectors";
 import {follow, requestUsersItems, setPageSize, setPortionNumber, unfollow} from "../../redux/users-reducer";
-import {Pagination} from "antd";
+import {Pagination, Alert} from "antd";
 import {getIsAuth} from "../../redux/authentication-selectors";
 
 const UsersContainer = ({
@@ -24,7 +26,9 @@ const UsersContainer = ({
                             follow,
                             unfollow,
                             isFollowFetching,
-                            isAuth
+                            isAuth,
+                            globalError,
+                            followingError
                         }) => {
 
     useEffect(() => {
@@ -50,11 +54,17 @@ const UsersContainer = ({
 
     return <div>
         {Paginator}
-        <Users usersItems={usersItems}
-               follow={follow}
-               unfollow={unfollow}
-               isFollowFetching={isFollowFetching}
-               isAuth={isAuth}/>
+        {
+            !globalError ? <Users usersItems={usersItems}
+                                  follow={follow}
+                                  unfollow={unfollow}
+                                  isFollowFetching={isFollowFetching}
+                                  isAuth={isAuth}
+                                  followingError={followingError}/>
+                : <Alert message={globalError}
+                         type="error"
+                         showIcon/>
+        }
     </div>
 }
 
@@ -64,7 +74,9 @@ const mapStateToProps = (state) => ({
     portionNumber: getPortionNumber(state),
     pageSize: getPageSize(state),
     isFollowFetching: getIsFollowFetching(state),
-    isAuth: getIsAuth(state)
+    isAuth: getIsAuth(state),
+    globalError: getGlobalError(state),
+    followingError: getFollowingError(state)
 });
 
 export default connect(mapStateToProps,

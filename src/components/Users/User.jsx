@@ -1,10 +1,10 @@
 import React from 'react';
-import {Avatar, Button, Divider} from "antd";
+import {Alert, Avatar, Button, Divider} from "antd";
 import {UserOutlined} from "@ant-design/icons";
 import style from './User.module.css';
 import {Link} from "react-router-dom";
 
-const User = ({user, follow, unfollow, isFollowFetching, isAuth}) => {
+const User = ({user, follow, unfollow, isFollowFetching, isAuth, followingError}) => {
     const onFollow = (userId) => {
         follow(userId);
     }
@@ -38,6 +38,13 @@ const User = ({user, follow, unfollow, isFollowFetching, isAuth}) => {
                 {user.status && <span><b>Status: </b>{user.status}</span>}
             </div>
         </div>
+
+        {
+            followingError && isFollowFetching.some(id => id === user.id) &&
+            <Alert message={followingError}
+                   type="error"
+                   showIcon/>
+        }
 
         <div className={style.followedButton}>
             {

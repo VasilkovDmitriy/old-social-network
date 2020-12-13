@@ -6,13 +6,17 @@ const SET_PORTION_NUMBER = 'users/SET_PORTION_NUMBER';
 const SET_PAGE_SIZE = 'users/SET_PAGE_SIZE';
 const SET_IS_USER_FOLLOWED = 'users/SET_IS_USER_FOLLOWED';
 const SET_IS_FOLLOW_FETCHING = 'users/SET_IS_FOLLOW_FETCHING';
+const SET_GLOBAL_ERROR = 'users/SET_GLOBAL_ERROR';
+const SET_FOLLOWING_ERROR = 'users/SET_FOLLOWING_ERROR';
 
 const initialState = {
     usersItems: [],
     totalUsersCount: null,
     portionNumber: 1,
     pageSize: 20,
-    isFollowFetching: []
+    isFollowFetching: [],
+    globalError: null,
+    followingError: null
 }
 
 const usersReducer = (state = initialState, action) => {
@@ -45,6 +49,14 @@ const usersReducer = (state = initialState, action) => {
                     ? [...state.isFollowFetching, action.userId]
                     : state.isFollowFetching.filter(userId => userId !== action.userId)
             }
+        case SET_GLOBAL_ERROR:
+            return {
+                ...state, globalError: action.error
+            }
+        case SET_FOLLOWING_ERROR:
+            return {
+                ...state, followingError: action.error
+            }
         default:
             return state;
     }
@@ -63,6 +75,10 @@ export const setIsUserFollowed = (userId, followed) => ({type: SET_IS_USER_FOLLO
 
 const setIsFollowFetching = (userId, isFetching) => ({type: SET_IS_FOLLOW_FETCHING, userId, isFetching});
 
+const setGlobalError = (error) => ({type: SET_GLOBAL_ERROR, error});
+
+const setFollowingError = (error) => ({type: SET_FOLLOWING_ERROR, error});
+
 
 export const requestUsersItems = (pageSize, portionNumber) => async (dispatch) => {
     try {
@@ -72,36 +88,43 @@ export const requestUsersItems = (pageSize, portionNumber) => async (dispatch) =
         if (!response.error) {
             dispatch(setTotalUsersCount(response.totalCount));
             dispatch(setUsersItems(response.items));
+        } else {
+            throw new Error(response.error);
         }
-    } catch (response) {
-        console.log(response);
+    } catch (error) {
+        dispatch(setGlobalError(error.toString()));
     }
 }
 
 export const follow = (userId) => async (dispatch) => {
     try {
         dispatch(followUnfollowFlow(userId, usersAPI.follow, true));
-    } catch (response) {
-        console.log(response);
+    } catch (error) {
+        dispatch(setFollowingError(error.toString()));
     }
 }
 
 export const unfollow = (userId) => async (dispatch) => {
     try {
         dispatch(followUnfollowFlow(userId, usersAPI.unfollow, false));
-    } catch (response) {
-        console.log(response);
+    } catch (error) {
+        dispatch(setFollowingError(error.toString()));
     }
 }
 
 const followUnfollowFlow = (userId, API, followed) => async (dispatch) => {
-    dispatch(setIsFollowFetching(userId, true));
-    const response = await API(userId);
+    try {
+        dispatch(setIsFollowFetching(userId, true));
+        const response = await API(userId);
 
-    if (response.resultCode === 0) {
-        dispatch(setIsUserFollowed(userId, followed));
+        if (response.resultCode === 0) {
+            dispatch(setIsUserFollowed(userId, followed));
+        }
+        dispatch(setIsFollowFetching(userId, false));
+    } catch (error) {
+        dispatch(setFollowingError(error.toString()));
     }
-    dispatch(setIsFollowFetching(userId, false));
+
 }
 
 export default usersReducer;
