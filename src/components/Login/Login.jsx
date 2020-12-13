@@ -2,6 +2,14 @@ import React from 'react';
 import {Form, Input, Button, Checkbox} from 'antd';
 import {MailOutlined, LockOutlined, SafetyOutlined} from '@ant-design/icons';
 import style from './Login.module.css';
+import { Alert } from 'antd';
+
+/*TODO
+
+1. кнопка для обновления каптчи
+
+
+*/
 
 
 const Login = ({onFinish, errorMessage, captchaUrl}) => {
@@ -12,10 +20,10 @@ const Login = ({onFinish, errorMessage, captchaUrl}) => {
             <Form.Item name="email"
                        rules={[
                            {required: true, message: 'Please input your email!',},
-                           {
+                           /*{
                                pattern: '^([A-Za-z0-9_\\-\\.])+\\@([A-Za-z0-9_\\-\\.])+\\.([A-Za-z]{2,})$',
                                message: "Please input a valid email"
-                           }
+                           }*/
                        ]}>
                 <Input prefix={<MailOutlined className="site-form-item-icon"/>}
                        placeholder="Email"/>
@@ -54,7 +62,10 @@ const Login = ({onFinish, errorMessage, captchaUrl}) => {
         {
             errorMessage &&
             <div className={style.errorMessage}>
-                {errorMessage}
+                <Alert
+                    message={errorMessage}
+                    type="error"
+                />
             </div>
         }
     </Form>

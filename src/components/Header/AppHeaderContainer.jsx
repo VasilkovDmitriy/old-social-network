@@ -1,8 +1,8 @@
 import React from 'react';
 import AppHeader from "./AppHeader";
 import {connect} from "react-redux";
-import {getAuthenticatedUserData, getIsAuth} from "../../redux/auth-selectors";
-import {userLogout} from "../../redux/auth-reducer";
+import {getAuthenticatedUserData, getIsAuth} from "../../redux/authentication-selectors";
+import {userLogout} from "../../redux/authentication-reducer";
 
 
 const AppHeaderContainer = (props) => {

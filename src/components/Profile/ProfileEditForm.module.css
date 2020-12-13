@@ -6,3 +6,9 @@
     padding: 30px;
     margin: 40px auto;
 }
+
+.formButtonsWrapper {
+    display: flex;
+    padding: 0 20%;
+    justify-content: space-around;
+}

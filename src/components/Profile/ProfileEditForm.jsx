@@ -1,5 +1,5 @@
 import React from 'react';
-import {Form, Input, Button, Checkbox} from 'antd';
+import {Form, Input, Button, Checkbox, Divider} from 'antd';
 import TextArea from "antd/es/input/TextArea";
 import style from './ProfileEditForm.module.css';
 
@@ -37,6 +37,7 @@ const ProfileEditForm = ({profileData, deactivateEditMode, profileSaveErrorMessa
             initialValues={{...initialValues}}
             onFinish={onFinish}>
 
+            <Divider>Main</Divider>
             <Form.Item label="Full name" name="fullName"
                        rules={[{required: true, message: 'Please input your username!'}]}>
                 <Input/>
@@ -55,7 +56,7 @@ const ProfileEditForm = ({profileData, deactivateEditMode, profileSaveErrorMessa
             </Form.Item>
 
             <div>
-                <b>Contacts: </b>
+                <Divider>Contacts</Divider>
                 {contactsFormsItems}
             </div>
             {
@@ -64,10 +65,12 @@ const ProfileEditForm = ({profileData, deactivateEditMode, profileSaveErrorMessa
                     {profileSaveErrorMessage}
                 </div>
             }
-            <Form.Item {...tailLayout}>
-                <Button type="primary" htmlType="submit">Save</Button>
-            </Form.Item>
-            <Button onClick={exitWithoutSaving}>Back</Button>
+            <div className={style.formButtonsWrapper}>
+                <Form.Item {...tailLayout}>
+                    <Button type="primary" htmlType="submit">Save</Button>
+                </Form.Item>
+                <Button onClick={exitWithoutSaving}>Back</Button>
+            </div>
         </Form>
 
     </div>

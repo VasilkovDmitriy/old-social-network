@@ -25,12 +25,13 @@ const AppHeader = ({isAuth, authenticatedUserData, userLogout}) => {
             <Col>
                 {
                     isAuth &&
-                    <span className={style.login}>{authenticatedUserData.login}</span>
-
+                    <div>
+                        <span className={style.login}>{authenticatedUserData.login}</span>
+                        <Avatar style={{backgroundColor: '#87d068'}}>
+                            {authenticatedUserData.login[0].toUpperCase()}
+                        </Avatar>
+                    </div>
                 }
-                <Avatar style={{backgroundColor: '#87d068'}}>
-                    {authenticatedUserData.login[0].toUpperCase()}
-                </Avatar>
             </Col>
         </Row>
     </Header>

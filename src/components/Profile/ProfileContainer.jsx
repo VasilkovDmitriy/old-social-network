@@ -4,7 +4,7 @@ import {compose} from "redux";
 import withAuthRedirect from "../../hoc/withAuthRedirect";
 import {connect} from "react-redux";
 import {withRouter} from "react-router-dom";
-import {getAuthenticatedUserData} from "../../redux/auth-selectors";
+import {getAuthenticatedUserData} from "../../redux/authentication-selectors";
 import {
     requestUserProfile,
     requestUserStatus,

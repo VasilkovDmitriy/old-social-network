@@ -1,7 +1,7 @@
 import React from 'react';
 import {connect} from "react-redux";
-import {userAuthentication} from "../../redux/auth-reducer";
-import {getAuthErrorMessage, getCaptchaUrl, getIsAuth} from "../../redux/auth-selectors";
+import {userAuthentication} from "../../redux/authentication-reducer";
+import {getAuthErrorMessage, getCaptchaUrl, getIsAuth} from "../../redux/authentication-selectors";
 import {Redirect} from "react-router-dom";
 import Login from "./Login";
 

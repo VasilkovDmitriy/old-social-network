@@ -1,6 +1,6 @@
 import React from 'react';
 import {connect} from "react-redux";
-import {getIsAuth} from "../redux/auth-selectors";
+import {getIsAuth} from "../redux/authentication-selectors";
 import {Redirect} from "react-router-dom";
 
 

@@ -10,16 +10,21 @@ import UsersContainer from "./components/Users/UsersContainer";
 import {connect, Provider} from "react-redux";
 import LargePreloader from "./components/common/Preloader/LargePreloader";
 import {appInitialization} from "./redux/app-reducer";
-import {getIsInitialized} from "./redux/app-selectors";
+import {getInitializingError, getIsInitialized} from "./redux/app-selectors";
 import LoginContainer from "./components/Login/LoginContainer";
 import store from "./redux/store";
+import {AlertError} from "./components/common/Alert/Alert";
 
 
 const {Content} = Layout;
 
-const App = ({appInitialization, isInitialized}) => {
+const App = ({appInitialization, isInitialized, initializingError}) => {
 
     useEffect(() => appInitialization(), [isInitialized, appInitialization]);
+
+    if (initializingError) {
+        return <AlertError message={initializingError}/>
+    }
 
     if (!isInitialized) {
         return <LargePreloader/>
@@ -43,7 +48,8 @@ const App = ({appInitialization, isInitialized}) => {
 }
 
 const mapStateToProps = (state) => ({
-    isInitialized: getIsInitialized(state)
+    isInitialized: getIsInitialized(state),
+    initializingError: getInitializingError(state)
 })
 
 const AppWithConnect = connect(mapStateToProps, {appInitialization})(App);
@@ -51,7 +57,7 @@ const AppWithConnect = connect(mapStateToProps, {appInitialization})(App);
 const SocialNetworkApp = () => {
     return <Provider store={store}>
         <BrowserRouter>
-           <AppWithConnect/>
+            <AppWithConnect/>
         </BrowserRouter>
     </Provider>
 }
