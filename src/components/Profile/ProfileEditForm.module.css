@@ -1,10 +1,6 @@
-.errorMessage {
-    width: 50%;
-    border: 1px red solid;
-    background-color: #f5bebe;
-    text-align: center;
-    padding: 30px;
-    margin: 40px auto;
+.alertWrapper {
+    margin: 15px;
+    padding-left: 25%;
 }
 
 .formButtonsWrapper {

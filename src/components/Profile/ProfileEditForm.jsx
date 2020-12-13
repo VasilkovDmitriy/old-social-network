@@ -1,5 +1,5 @@
 import React from 'react';
-import {Form, Input, Button, Checkbox, Divider} from 'antd';
+import {Form, Input, Button, Checkbox, Divider, Alert} from 'antd';
 import TextArea from "antd/es/input/TextArea";
 import style from './ProfileEditForm.module.css';
 
@@ -12,7 +12,7 @@ const tailLayout = {
     wrapperCol: {offset: 8, span: 16},
 };
 
-const ProfileEditForm = ({profileData, deactivateEditMode, profileSaveErrorMessage, exitWithoutSaving}) => {
+const ProfileEditForm = ({profileData, deactivateEditMode, editProfileFormError, exitWithoutSaving}) => {
 
     const {contacts} = profileData;
 
@@ -59,12 +59,16 @@ const ProfileEditForm = ({profileData, deactivateEditMode, profileSaveErrorMessa
                 <Divider>Contacts</Divider>
                 {contactsFormsItems}
             </div>
-            {
-                profileSaveErrorMessage &&
-                <div className={style.errorMessage}>
-                    {profileSaveErrorMessage}
-                </div>
-            }
+
+            <div className={style.alertWrapper}>
+                {
+                    editProfileFormError &&
+                    <Alert message={editProfileFormError}
+                           type="error"
+                           showIcon/>
+                }
+            </div>
+
             <div className={style.formButtonsWrapper}>
                 <Form.Item {...tailLayout}>
                     <Button type="primary" htmlType="submit">Save</Button>

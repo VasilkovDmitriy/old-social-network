@@ -2,16 +2,18 @@ import React, {useState, useEffect} from 'react';
 import SmallPreloader from "../common/Preloader/SmallPreloader";
 import ProfileInfo from "./ProfileInfo";
 import ProfileEditForm from "./ProfileEditForm";
+import {Alert} from "antd";
 
 const Profile = ({
                      profileData,
                      saveProfile,
                      isProfileSavedSuccess,
-                     profileSaveErrorMessage,
+                     profileError,
                      savePhoto,
                      userStatus,
                      updateUserStatus,
-                     isOwner
+                     isOwner,
+                     editProfileFormError
                  }) => {
     const [editMode, setEditMode] = useState(false);
 
@@ -38,6 +40,13 @@ const Profile = ({
         return Promise.reject();
     }
 
+    if (profileError) {
+        return <Alert message={profileError}
+                      type="error"
+                      showIcon/>
+    }
+
+
     if (!profileData) {
         return <SmallPreloader/>
     }
@@ -45,7 +54,7 @@ const Profile = ({
     return editMode
         ? <ProfileEditForm profileData={profileData}
                            deactivateEditMode={deactivateEditMode}
-                           profileSaveErrorMessage={profileSaveErrorMessage}
+                           editProfileFormError={editProfileFormError}
                            exitWithoutSaving={exitWithoutSaving}/>
 
         : <ProfileInfo profileData={profileData}

@@ -13,9 +13,9 @@ import {
     updateUserStatus
 } from "../../redux/profile-reducer";
 import {
+    getEditProfileFormError,
     getIsProfileSavedSuccess,
-    getProfileData,
-    getProfileSaveErrorMessage,
+    getProfileData, getProfileError,
     getUserProfile
 } from "../../redux/profile-selectors";
 
@@ -37,7 +37,8 @@ const mapStateToProps = (state) => ({
     profileData: getProfileData(state),
     userStatus: getUserProfile(state),
     isProfileSavedSuccess: getIsProfileSavedSuccess(state),
-    profileSaveErrorMessage: getProfileSaveErrorMessage(state),
+    profileError: getProfileError(state),
+    editProfileFormError: getEditProfileFormError(state)
 
 })
 

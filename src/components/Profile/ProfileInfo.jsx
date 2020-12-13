@@ -10,7 +10,7 @@ const ProfileInfo = ({
                          onUploadPhoto,
                          userStatus,
                          updateUserStatus,
-                         isOwner
+                         isOwner,
                      }) => {
 
     const {fullName, photos, aboutMe, lookingForAJob, lookingForAJobDescription, contacts} = profileData;
@@ -29,6 +29,7 @@ const ProfileInfo = ({
     })
 
     return <div className={style.profileWrapper}>
+
         <div className={style.avatarAndButtonsWrapper}>
             <div className={style.userPhoto}>
                 {
@@ -56,7 +57,7 @@ const ProfileInfo = ({
 
             <ProfileStatus userStatus={userStatus} updateUserStatus={updateUserStatus} isOwner={isOwner}/>
 
-            <Divider />
+            <Divider/>
 
             <div>
                 <b>About me: </b>{aboutMe}
