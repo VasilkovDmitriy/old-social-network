@@ -102,22 +102,14 @@ export const savePhoto = (photo) => async (dispatch) => {
 }
 
 export const requestUserStatus = (userId) => async (dispatch) => {
-    try {
-        const status = await profileAPI.getUserStatus(userId);
-        dispatch(setUserProfile(status));
-    } catch (error) {
-        dispatch(setProfileError(error.toString()));
-    }
+    const status = await profileAPI.getUserStatus(userId);
+    dispatch(setUserProfile(status));
 }
 
 export const updateUserStatus = (status) => async (dispatch) => {
-    try {
-        const response = await profileAPI.saveUserStatus(status);
-        if (response.resultCode === 0) {
-            dispatch(setUserProfile(status));
-        }
-    } catch (error) {
-        dispatch(setProfileError(error.toString()));
+    const response = await profileAPI.saveUserStatus(status);
+    if (response.resultCode === 0) {
+        dispatch(setUserProfile(status));
     }
 }
 
